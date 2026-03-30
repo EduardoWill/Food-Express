@@ -12,9 +12,13 @@ const [text,setText] = useState("");
         <Text>Bah</Text>
         <TextInput value={text} 
         onChangeText={setText}
-        placeholder="Texto"
-        style={styles.input}>
-        </TextInput>
+        placeholder="useless placeholder"
+        style={styles.input}/>
+        <TextInput value={text} 
+        onChangeText={setText}
+        placeholder="useless placeholder"
+        style={styles.input}/>
+        
    
 </ThemedView>
 );
@@ -32,8 +36,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     input: {
-
-        borderWidth:1,
+        width: 300,
+        height: 60,
+        margin: 1,
+        borderWidth:0.5,
+        padding:20,
+        borderRadius: 20,
+        borderColor: "#800080",
     }
 
 
