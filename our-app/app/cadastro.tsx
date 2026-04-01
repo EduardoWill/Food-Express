@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View, Text} from "react-native";
+import { StyleSheet, TextInput, View, Text, Button, Alert} from "react-native";
 import React, {useState} from "react";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -11,6 +11,43 @@ const [senha, setSenha] = useState("");
 const [conSenha, conSetSenha] = useState ("");
 const [cpf, setCpf] = useState("");
 const [num, numSet] = useState("");
+
+const handleSubmit = () => {
+  if (!nome || !email || !senha || !conSenha || !cpf || !num) {
+    Alert.alert("Erro", "Por favor, preencha todos os campos.");
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (nome.length >= 10 && nome.length <= 60) {
+    Alert.alert("Erro", "O nome deve conter entre 10 e 60 caracteres.");
+    return;
+  } 
+  
+  if (!emailRegex.test(email)) {
+    Alert.alert("Erro", "Email inválido.");
+    return;
+  }
+
+  if (senha.length < 6) {
+    Alert.alert("Erro", "A senha deve ter pelo menos 6 caracteres.");
+    return;
+  }
+
+  if (senha !== conSenha) {
+    Alert.alert("Erro", "As senhas não coincidem.");
+    return;
+  }
+
+  const cpfOnlyDigits = cpf.replace(/\D/g, "");
+  if (cpfOnlyDigits.length !== 11) {
+    Alert.alert("Erro", "CPF deve conter 11 dígitos.");
+    return;
+  }
+
+  Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+};
+
     return( 
 <ThemedView style={styles.container}>
     
@@ -52,10 +89,14 @@ const [num, numSet] = useState("");
         keyboardType = "phone-pad"
         style={styles.input}/>
         
-   
-</ThemedView>
-);
+        <Button
+          title="Enviar" onPress={handleSubmit}
+        />
 
+
+   
+    </ThemedView>
+  );
 
 }
 
