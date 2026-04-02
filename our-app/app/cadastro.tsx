@@ -2,6 +2,10 @@ import { StyleSheet, TextInput, View, Text} from "react-native";
 import React, {useState} from "react";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { salvarUsuario } from "@/services/firebase";
+import { Button } from "react-native";
+
+
 
 
 export default function Cadastro () {
@@ -11,6 +15,29 @@ const [senha, setSenha] = useState("");
 const [conSenha, conSetSenha] = useState ("");
 const [cpf, setCpf] = useState("");
 const [num, numSet] = useState("");
+
+const handleCadastro = () => {
+    if (!nome || !email || !senha) {
+      console.log("Preencha os campos obrigatórios");
+      return;
+    }
+
+    if (senha !== conSenha) {
+      console.log("Senhas não coincidem ");
+      return;
+    }
+
+    const dadosUsuario = {
+      nome,
+      email,
+      senha,
+      cpf,
+      telefone: num,
+    };
+
+    salvarUsuario(dadosUsuario);
+  };
+
     return( 
 <ThemedView style={styles.container}>
     
@@ -52,7 +79,8 @@ const [num, numSet] = useState("");
         keyboardType = "phone-pad"
         style={styles.input}/>
         
-   
+        <Button title="Cadastrar" onPress={handleCadastro} />
+
 </ThemedView>
 );
 
@@ -77,6 +105,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderColor: "#800080",
     }
+
+
 
 
 })
