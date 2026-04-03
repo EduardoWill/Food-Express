@@ -51,7 +51,7 @@ const handleSubmit = () => {
     return( 
 <ThemedView style={styles.container}>
     
-        <Text>Titúlo</Text>
+        <Text>Título</Text>
 
         <TextInput value={nome} 
         onChangeText={setNome}
