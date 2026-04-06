@@ -29,29 +29,40 @@ export default function Cadastro() {
   };
 
   const handleCadastro = () => {
-    if (!nome || !email || !senha || !conSenha || !cpf || !num) {
-      showModal("Erro", "Preencha todos os campos.");
-      return;
-    }
+     if (!nome || !email || !senha || !conSenha || !cpf || !num) {
+    showModal("Erro", "Por favor, preencha todos os campos.");
+    return;
+  }
 
-    if (senha !== conSenha) {
-      showModal("Erro", "Senhas não coincidem.");
-      return;
-    }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (nome.length < 10 || nome.length > 60) {
+    showModal("Erro", "O nome deve conter entre 10 e 60 caracteres.");
+    return;
+  }
+  
+  if (!emailRegex.test(email)) {
+    showModal("Erro", "Email inválido.");
+    return;
+  }
 
-    const dadosUsuario = {
-      nome,
-      email,
-      senha,
-      cpf,
-      telefone: num,
-    };
+  if (senha.length < 6) {
+    showModal("Erro", "A senha deve ter pelo menos 6 caracteres.");
+    return;
+  }
 
-    salvarUsuario(dadosUsuario);
+  if (senha !== conSenha) {
+    showModal("Erro", "As senhas não coincidem.");
+    return;
+  }
 
-    showModal("Sucesso", "Cadastro realizado com sucesso!");
-  };
+  const cpfOnlyDigits = cpf.replace(/\D/g, "");
+  if (cpfOnlyDigits.length !== 11) {
+    showModal("Erro", "CPF deve conter 11 dígitos.");
+    return;
+  }
 
+  showModal("Sucesso", "Cadastro realizado com sucesso!");
+};
   return (
     <ThemedView style={styles.container}>
       <Text style={{ fontSize: 20, marginBottom: 10 }}>Cadastro</Text>
